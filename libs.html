@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Статьи — Марбрик</title>
+  <style>
+    /* Сюда можно скопировать общие стили из index.html или вынести их в отдельный style.css */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, #4a1d6e 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6b2fa0 0%, transparent 45%),
+        linear-gradient(160deg, #1c0526 0%, #2e0a45 100%);
+      background-attachment: fixed;
+      padding: 40px 16px;
+      color: #f0e6ff;
+    }
+    .panel {
+      width: 100%;
+      max-width: 720px;
+      background: rgba(30, 8, 48, 0.75);
+      border: 1px solid rgba(190, 120, 255, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      padding: 32px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 24px;
+      text-shadow: 0 0 15px rgba(180, 100, 255, 0.6);
+    }
+    .article-list a {
+      display: block;
+      margin: 16px 0;
+      padding: 14px;
+      background: rgba(60, 18, 92, 0.6);
+      border: 1px solid rgba(190, 120, 255, 0.2);
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .article-list a:hover {
+      background: rgba(140, 70, 200, 0.4);
+      transform: translateX(8px);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: #d9b8ff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Статьи</h1>
+
+    <div class="article-list">
+      <a href="#post-1">
+        <strong>Как я делал Undertale на кнопочном телефоне</strong><br>
+        <small>15 ноября 2026 • 3 мин чтения</small>
+      </a>
+      <a href="#post-2">
+        <strong>Марбрик и Джуниор: история персонажей</strong><br>
+        <small>10 ноября 2026 • 4 мин чтения</small>
+      </a>
+      <a href="#post-3">
+        <strong>Запись вокала для j-pop: мой опыт</strong><br>
+        <small>5 ноября 2026 • 5 мин чтения</small>
+      </a>
+    </div>
+
+    <a href="index.html" class="back-link">← Вернуться на главную</a>
+  </div>
+</body>
+</html>
