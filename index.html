@@ -1,409 +1,186 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MARI — сайт канала</title>
-<style>
-:root{
-  --bg:#12141a; --card:#1c1f29; --card2:#232735; --accent:#8f7bff;
-  --accent2:#5ad1b8; --text:#e8eaf2; --muted:#9aa1b5; --radius:18px;
-}
-*{box-sizing:border-box; margin:0; padding:0;}
-body{
-  background:var(--bg); color:var(--text);
-  font-family:'Segoe UI', Arial, sans-serif; min-height:100vh;
-}
-.screen{display:none; max-width:760px; margin:0 auto; padding:24px 18px 60px;}
-.screen.active{display:block;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Марбрик — официальный сайт</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ===== Шапка ===== */
-.topbar{display:flex; align-items:center; gap:12px; margin-bottom:22px;}
-.back-btn{
-  background:var(--card); color:var(--text); border:1px solid #333a4d;
-  border-radius:12px; padding:10px 16px; cursor:pointer; font-size:15px;
-}
-.back-btn:hover{background:var(--card2);}
-.brand{font-weight:700; letter-spacing:.5px; font-size:20px; color:var(--accent);}
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      /* Тёмно-фиолетовый "замыленный" фон: несколько мягких пятен */
+      background:
+        radial-gradient(circle at 20% 20%, #4a1d6e 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6b2fa0 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, #3b1054 0%, transparent 50%),
+        linear-gradient(160deg, #1c0526 0%, #2e0a45 100%);
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+      color: #f0e6ff;
+    }
 
-h1{font-size:26px; margin-bottom:6px;}
-h2{font-size:20px; margin:22px 0 10px;}
-p{line-height:1.6; color:var(--muted); margin-bottom:12px;}
-.lead{color:var(--text);}
+    /* Заголовок в самом верху */
+    .site-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(180, 100, 255, 0.6);
+      margin-bottom: 30px;
+    }
 
-/* ===== Главный экран: плитки ===== */
-.tiles{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:26px 0;}
-.tile{
-  aspect-ratio:1/1; border-radius:var(--radius);
-  background:var(--card); border:1px solid #2a2f42;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:12px; cursor:pointer; transition:transform .15s, background .15s, border-color .15s;
-  text-align:center; padding:12px;
-}
-.tile:hover{transform:translateY(-4px); background:var(--card2); border-color:var(--accent);}
-.tile .ico{font-size:44px;}
-.tile .name{font-size:18px; font-weight:700;}
-.tile .sub{font-size:12px; color:var(--muted);}
+    /* Панель-прямоугольник поверх фона */
+    .panel {
+      width: 100%;
+      max-width: 640px;
+      background: rgba(30, 8, 48, 0.75);
+      border: 1px solid rgba(190, 120, 255, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px); /* лёгкое размытие фона за панелью */
+      padding: 32px 28px;
+    }
 
-/* ===== Контакты внизу ===== */
-.contacts{
-  margin-top:34px; padding:18px; border-radius:var(--radius);
-  background:var(--card); border:1px solid #2a2f42;
-}
-.contacts h3{margin-bottom:10px; font-size:16px;}
-.contact-row{
-  display:flex; align-items:center; gap:10px; padding:8px 0;
-  color:var(--muted); font-size:14px; border-bottom:1px dashed #2a2f42;
-}
-.contact-row:last-child{border-bottom:none;}
-.contact-row a{color:var(--accent); text-decoration:none;}
-.contact-row a:hover{text-decoration:underline;}
+    .panel-heading {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      color: #e6ccff;
+    }
 
-/* ===== Вкладки (фонотека) ===== */
-.tabs{display:flex; gap:10px; margin:18px 0;}
-.tab{
-  padding:10px 20px; border-radius:12px; background:var(--card);
-  border:1px solid #2a2f42; color:var(--muted); cursor:pointer; font-size:14px;
-}
-.tab.on{background:var(--accent); color:#fff; border-color:var(--accent);}
-.tab-panel{display:none;}
-.tab-panel.on{display:block;}
+    /* Сетка плиток 2х2 */
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
 
-/* ===== Списки: треки, видео, статьи ===== */
-.list-item{
-  background:var(--card); border:1px solid #2a2f42; border-radius:var(--radius);
-  padding:16px; margin-bottom:12px; cursor:pointer;
-  transition:background .15s, border-color .15s;
-}
-.list-item:hover{background:var(--card2); border-color:var(--accent);}
-.list-item .li-title{font-weight:700; font-size:16px; margin-bottom:4px;}
-.list-item .li-desc{font-size:13px; color:var(--muted); line-height:1.5;}
-.li-meta{font-size:12px; color:var(--accent2); margin-bottom:6px;}
-.play-btn{
-  display:inline-block; margin-top:8px; padding:6px 14px; border-radius:10px;
-  background:var(--accent); color:#fff; font-size:13px; cursor:pointer;
-}
-.badge{
-  display:inline-block; padding:3px 10px; border-radius:8px; font-size:11px;
-  background:#2a2f42; color:var(--muted); margin-right:6px;
-}
-.badge.new{background:var(--accent2); color:#123;}
+    .tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 28px 12px;
+      background: linear-gradient(145deg, rgba(106, 47, 160, 0.5), rgba(60, 18, 92, 0.6));
+      border: 1px solid rgba(190, 120, 255, 0.3);
+      border-radius: 14px;
+      text-decoration: none;
+      color: #f0e6ff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
 
-/* ===== Статья (читалка) ===== */
-.article-body{max-height:none; overflow-y:auto; line-height:1.7; color:var(--muted);}
-.article-body p{margin-bottom:14px; font-size:15px;}
-.article-body h2{color:var(--text);}
-.article-body ul{margin:0 0 14px 20px; color:var(--muted);}
-.article-body li{margin-bottom:6px;}
-.article-meta{color:var(--muted); font-size:13px; margin-bottom:18px;}
+    .tile .icon {
+      font-size: 2.2rem;
+    }
 
-/* ===== Картинки-заглушки ===== */
-.img-ph{
-  border:2px dashed #3a4058; border-radius:var(--radius);
-  background:rgba(143,123,255,.05);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:6px; min-height:180px; margin:18px 0; color:#5a6180; font-size:14px;
-  text-align:center; padding:14px;
-}
-.img-ph .big{font-size:34px;}
-.img-ph.real{border-style:solid; padding:0; background:none;}
-.img-ph.real img{width:100%; border-radius:var(--radius); display:block;}
+    .tile:hover {
+      transform: translateY(-4px);
+      background: linear-gradient(145deg, rgba(140, 70, 200, 0.6), rgba(80, 25, 120, 0.7));
+      box-shadow: 0 6px 20px rgba(160, 80, 255, 0.35);
+    }
 
-.divider{height:1px; background:#2a2f42; margin:26px 0;}
-</style>
+    /* Блоки контактов и соцсетей */
+    .info-section {
+      margin-top: 28px; /* небольшой отступ снизу от плиток */
+      text-align: center;
+    }
+
+    .info-section h3 {
+      font-size: 1.05rem;
+      color: #d9b8ff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .info-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .info-links a {
+      color: #f0e6ff;
+      text-decoration: none;
+      background: rgba(140, 70, 200, 0.25);
+      border: 1px solid rgba(190, 120, 255, 0.25);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .info-links a:hover {
+      background: rgba(170, 100, 235, 0.45);
+      box-shadow: 0 0 12px rgba(180, 100, 255, 0.4);
+    }
+
+    /* Адаптив для телефонов */
+    @media (max-width: 480px) {
+      .site-title { font-size: 1.5rem; }
+      .panel { padding: 24px 16px; }
+      .tile { padding: 22px 10px; font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ===================== ГЛАВНЫЙ ЭКРАН ===================== -->
-<section class="screen active" id="scr-home">
-  <div class="topbar"><span class="brand">MARI</span></div>
-  <h1>Привет! Это сайт канала 👋</h1>
-  <p class="lead">Документация, персонажи, музыка и видео — всё в одном месте.</p>
+  <h1 class="site-title">Марбрик — официальный сайт</h1>
 
-  <div class="tiles">
-    <div class="tile" data-go="javatale">
-      <div class="ico">🗡️</div><div class="name">Java Tale</div>
-      <div class="sub">Мой проект — этапы и новости</div>
+  <div class="panel">
+    <h2 class="panel-heading">Что желаете найти?~</h2>
+
+    <div class="tiles">
+      <a class="tile" href="#javatale">
+        <span class="icon">❤️</span>
+        <span>JavaTale</span>
+      </a>
+      <a class="tile" href="#fonoteka">
+        <span class="icon">💿</span>
+        <span>Фонотека</span>
+      </a>
+      <a class="tile" href="#video">
+        <span class="icon">🎥</span>
+        <span>Видео</span>
+      </a>
+      <a class="tile" href="#articles">
+        <span class="icon">📚</span>
+        <span>Статьи</span>
+      </a>
     </div>
-    <div class="tile" data-go="phonoteca">
-      <div class="ico">🎵</div><div class="name">Фонотека</div>
-      <div class="sub">Каверы и оригинальные треки</div>
+
+    <div class="info-section">
+      <h3>Контактная информация</h3>
+      <div class="info-links">
+        <a href="mailto:твоя-почта@example.com">Почта</a>
+        <a href="https://t.me/твой-ник" target="_blank" rel="noopener">Телеграм</a>
+      </div>
     </div>
-    <div class="tile" data-go="video">
-      <div class="ico">🎬</div><div class="name">Видео</div>
-      <div class="sub">Ролики и описания</div>
-    </div>
-    <div class="tile" data-go="articles">
-      <div class="ico">📚</div><div class="name">Статьи</div>
-      <div class="sub">Хронология, персонажи, лор</div>
-    </div>
-  </div>
 
-  <div class="contacts">
-    <h3>Контакты</h3>
-    <div class="contact-row">✉️ Почта: <a href="mailto:mail@example.com">mail@example.com</a></div>
-    <div class="contact-row">💬 Telegram: <a href="#">@username</a></div>
-    <div class="contact-row">▶️ YouTube: <a href="#">Мой канал</a></div>
-  </div>
-</section>
-
-<!-- ===================== JAVA TALE ===================== -->
-<section class="screen" id="scr-javatale">
-  <div class="topbar">
-    <button class="back-btn" data-back>← Назад</button>
-    <span class="brand">Java Tale</span>
-  </div>
-  <h1>Java Tale</h1>
-  <p class="lead">Текущий этап разработки и история обновлений.</p>
-
-  <h2>Текущий этап</h2>
-  <div class="list-item">
-    <div class="li-title">Этап: работа над сюжетом</div>
-    <div class="li-desc">Здесь пишу текущий статус проекта: что сделано, что в процессе, что дальше. Меняю этот блок при каждом обновлении.</div>
-    <span class="badge new">обновлено сегодня</span>
-  </div>
-
-  <h2>История обновлений</h2>
-  <div class="list-item">
-    <div class="li-title">Версия 0.3</div>
-    <div class="li-desc">Заглушка. Опиши, что изменилось в этой версии.</div>
-  </div>
-  <div class="list-item">
-    <div class="li-title">Версия 0.2</div>
-    <div class="li-desc">Заглушка.</div>
-  </div>
-  <div class="list-item">
-    <div class="li-title">Версия 0.1</div>
-    <div class="li-desc">Заглушка. Первый релиз.</div>
-  </div>
-</section>
-
-<!-- ===================== ФОНОТЕКА ===================== -->
-<section class="screen" id="scr-phonoteca">
-  <div class="topbar">
-    <button class="back-btn" data-back>← Назад</button>
-    <span class="brand">Фонотека</span>
-  </div>
-  <h1>Фонотека</h1>
-  <p class="lead">Музыка канала: каверы и собственные треки.</p>
-
-  <div class="tabs">
-    <div class="tab on" data-tab="covers">Каверы</div>
-    <div class="tab" data-tab="originals">Оригинальные треки</div>
-  </div>
-
-  <div class="tab-panel on" id="panel-covers">
-    <div class="list-item">
-      <div class="li-title">Название кавера 1</div>
-      <div class="li-desc">Заглушка: оригинал, чем отличается твоя версия.</div>
-      <span class="play-btn">▶ Слушать</span>
-    </div>
-    <div class="list-item">
-      <div class="li-title">Название кавера 2</div>
-      <div class="li-desc">Заглушка.</div>
-      <span class="play-btn">▶ Слушать</span>
+    <div class="info-section">
+      <h3>Социальные сети</h3>
+      <div class="info-links">
+        <a href="https://youtube.com/@твой-канал" target="_blank" rel="noopener">Ютуб</a>
+        <a href="https://vk.com/твоя-страница" target="_blank" rel="noopener">ВК</a>
+        <a href="https://dzen.ru/твой-канал" target="_blank" rel="noopener">Дзен</a>
+        <a href="https://rutube.ru/channel/твой-канал" target="_blank" rel="noopener">Рутуб</a>
+      </div>
     </div>
   </div>
 
-  <div class="tab-panel" id="panel-originals">
-    <div class="list-item">
-      <div class="li-title">Оригинальный трек 1</div>
-      <div class="li-desc">Заглушка: настроение, где звучал.</div>
-      <span class="play-btn">▶ Слушать</span>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== ВИДЕО ===================== -->
-<section class="screen" id="scr-video">
-  <div class="topbar">
-    <button class="back-btn" data-back>← Назад</button>
-    <span class="brand">Видео</span>
-  </div>
-  <h1>Видео</h1>
-  <p class="lead">Ролики канала: название, краткое описание и ссылка.</p>
-
-  <div class="list-item" data-link="https://youtube.com/">
-    <div class="li-meta">Поколение 5</div>
-    <div class="li-title">Название ролика</div>
-    <div class="li-desc">Заглушка: краткое описание ролика в 1–2 строки.</div>
-    <span class="play-btn">▶ Смотреть</span>
-  </div>
-  <div class="list-item" data-link="https://youtube.com/">
-    <div class="li-meta">Поколение 4</div>
-    <div class="li-title">Название ролика</div>
-    <div class="li-desc">Заглушка.</div>
-    <span class="play-btn">▶ Смотреть</span>
-  </div>
-</section>
-
-<!-- ===================== СТАТЬИ (список) ===================== -->
-<section class="screen" id="scr-articles">
-  <div class="topbar">
-    <button class="back-btn" data-back>← Назад</button>
-    <span class="brand">Статьи</span>
-  </div>
-  <h1>Статьи</h1>
-  <p class="lead">Хронология канала, персонажи и внутренний лор. Нажми на статью, чтобы читать.</p>
-  <div id="articles-list"></div>
-</section>
-
-<!-- ===================== СТАТЬЯ (читалка) ===================== -->
-<section class="screen" id="scr-article">
-  <div class="topbar">
-    <button class="back-btn" data-back>← Назад</button>
-    <span class="brand">Статьи</span>
-  </div>
-  <div class="article-wrap" id="article-content"></div>
-</section>
-
-<script>
-/* =====================================================
-   КАК ДОБАВИТЬ НОВУЮ СТАТЬЮ:
-   1. Найди ниже массив ARTICLES.
-   2. Скопируй любой блок вида  { id:"...", ... }  и вставь в конец списка.
-   3. Поменяй id (уникальное слово), title, tag, date и html.
-   4. Картинка-заглушка в тексте:
-        <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить картинку</div>
-      Настоящая картинка (файл рядом с сайтом):
-        <img src="assets/moy_kartinok.png" style="width:100%;border-radius:18px;">
-   ===================================================== */
-const ARTICLES = [
-  {
-    id:"gen1",
-    tag:"Поколения", title:"Поколение 1. Летсплеи с телефона",
-    date:"2019–2021",
-    html:`
-      <p class="lead">Точка ноль канала. Время, когда всё начиналось с летсплеев, записанных с телефона.</p>
-      <p>Заглушка основного текста: опиши, что происходило в этот период — какие были ролики, какой был Марбрик (красная, «очень фигурная» версия), какое было настроение.</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить картинку</div>
-      <h2>Что важно запомнить</h2>
-      <ul>
-        <li>Аудитории ещё не было — рисование «для себя».</li>
-        <li>Первые шаблоны и пририсованные руки.</li>
-      </ul>
-      <p>Продолжение заглушки. Замени этот текст на свою историю.</p>
-    `
-  },
-  {
-    id:"gen2",
-    tag:"Поколения", title:"Поколение 2. Жизненный цикл редизайна Марблика",
-    date:"2022",
-    html:`
-      <p class="lead">Эпоха, когда Марблик менялся: с белой кожей — в более человечную версию.</p>
-      <p>Заглушка текста. Опиши, как шёл редизайн, откуда взялась система «квадраты и треугольники», история со шлемом и «Марби Кушле».</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить картинку</div>
-      <div class="img-ph"><div class="big">🖼</div>А здесь — вторая картинка</div>
-    `
-  },
-  {
-    id:"gen3",
-    tag:"Поколения", title:"Поколение 3. Золотая эра",
-    date:"2023",
-    html:`
-      <p class="lead">Год первой аудитории. Считается золотым временем канала.</p>
-      <p>Заглушка: что изменилось с приходом первых зрителей, какие ролики выходили, какой дизайн был у Марбрика (светло-жёлтые волосы, фиолетовая футболка).</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить картинку</div>
-    `
-  },
-  {
-    id:"gen45",
-    tag:"Поколения", title:"Поколения 4–5. Лицо и зрелость",
-    date:"2024–2025",
-    html:`
-      <p class="lead">Первые ролики с демонстрацией лица — и их более адекватное продолжение.</p>
-      <p>Заглушка: как выглядели первые ролики с лицом в четвёртом поколении, что изменилось в пятом, почему стало лучше.</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить картинку</div>
-    `
-  },
-  {
-    id:"marbrik",
-    tag:"Персонажи", title:"Marbrik. Таймлайн дизайнов",
-    date:"2019 → 2024",
-    html:`
-      <p class="lead">Главный герой канала. Прошёл путь от «красной фигурной версии» до курточки с погонами.</p>
-      <p>Заглушка: 2019 — красная версия, 2021 — «классический» дизайн, 2023 — светло-жёлтые волосы и фиолетовая футболка, 2024 — текущий дизайн с курточкой и «штучками для погонов».</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить картинку (например, сравнение версий)</div>
-    `
-  },
-  {
-    id:"junifer",
-    tag:"Персонажи", title:"Джунифер. Канон и архив",
-    date:"2021 / 2022",
-    html:`
-      <p class="lead">Персонаж, появившийся очень давно, но долго не участвовавший в жизни канала.</p>
-      <p><b>Канон (2021):</b> версия, которая появится в клипе. Спокойные тона, редизайн «в паре» с Марбриком.</p>
-      <p><b>Архив (22 марта):</b> короткая кривая анимация из Ibis — «Джунифер украла iPhone на 8 марта». Милый артефакт эпохи «до зрителей».</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить скриншот из Camtasia</div>
-    `
-  },
-  {
-    id:"kanceler",
-    tag:"Персонажи", title:"Канцлер. Дебют в клипе",
-    date:"статус: не подтверждён",
-    html:`
-      <p class="lead">Персонаж, который дебютирует в клипе. Вдохновлён розовой девчонкой из пилота «Злодей общий сбор» — с очень гиперболизированным характером.</p>
-      <p>Заглушка: функция в клипе, дизайн, отличительные черты.</p>
-      <div class="img-ph"><div class="big">🖼</div>Здесь можно вставить референс</div>
-    `
-  }
-];
-
-/* ===== Рендер списка статей ===== */
-const listEl = document.getElementById('articles-list');
-ARTICLES.forEach(a=>{
-  const d = document.createElement('div');
-  d.className = 'list-item';
-  d.innerHTML = `
-    <div class="li-meta">${a.tag} · ${a.date}</div>
-    <div class="li-title">${a.title}</div>
-    <div class="li-desc">Нажми, чтобы открыть статью</div>`;
-  d.onclick = ()=> openArticle(a.id);
-  listEl.appendChild(d);
-});
-
-/* ===== Открытие статьи ===== */
-function openArticle(id){
-  const a = ARTICLES.find(x=>x.id===id);
-  if(!a) return;
-  document.getElementById('article-content').innerHTML = `
-    <h1>${a.title}</h1>
-    <div class="article-meta">${a.tag} · ${a.date}</div>
-    <div class="article-body">${a.html}</div>`;
-  show('scr-article');
-}
-
-/* ===== Навигация ===== */
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-document.querySelectorAll('[data-go]').forEach(el=>{
-  el.onclick = ()=> show('scr-'+el.dataset.go);
-});
-document.querySelectorAll('[data-back]').forEach(el=>{
-  el.onclick = ()=>{
-    const cur = document.querySelector('.screen.active').id;
-    if(cur==='scr-article') show('scr-articles');
-    else show('scr-home');
-  };
-});
-
-/* ===== Вкладки фонотеки ===== */
-document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick = ()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('on'));
-    t.classList.add('on');
-    document.getElementById('panel-'+t.dataset.tab).classList.add('on');
-  };
-});
-
-/* ===== Ссылки на видео ===== */
-document.querySelectorAll('[data-link]').forEach(el=>{
-  el.onclick = ()=> window.open(el.dataset.link, '_blank');
-});
-</script>
 </body>
 </html>
+
+  
