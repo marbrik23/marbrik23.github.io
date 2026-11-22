@@ -152,7 +152,7 @@
       "description": "В статье будет рассказано о каждом персонаже команды нашего канала.",
       "date": "26 октября 2024",
       "color": "#b45cff",
-      "icon": "❤️",
+      "icon": "⭐",
       "url": "libs/personal/meet_marbrik_team.html"
     },
     {
@@ -161,9 +161,37 @@
       "description": "Статья обо мне, моей жизни и ютуберстве.",
       "date": "2 ноября 2024",
       "color": "#ff7ac8",
-      "icon": "",
+      "icon": "🧑🏻‍💻",
       "url": "libs/personal/about_me.html"
     }
   ],
-  "archive": []
+  "archive": [
+    {
+      "id": "Arch-1",
+      "title": "Архив - видео",
+      "description": "Краткое описание каждого ролика",
+      "date": "22 ноября 2026",
+      "color": "#BAA659",
+      "icon": "🎞️",
+      "url": "libs/archive/video.html"
+    },
+    {
+      "id": "Arch-2",
+      "title": "Архив - контент",
+      "description": "Общий журнал событий проекта «Марбрик»",
+      "date": "22 ноября 2026",
+      "color": "#BAA659",
+      "icon": "🗃️",
+      "url": "libs/archive/content.html"
+    },
+    {
+      "id": "Arch-3",
+      "title": "Архив - Javatale",
+      "description": "Журнал событий проекта «Javatale»",
+      "date": "22 ноября 2026",
+      "color": "#BAA659",
+      "icon": "❤️",
+      "url": "libs/archive/jt_chrono.html"
+    }
+  ]
 }
