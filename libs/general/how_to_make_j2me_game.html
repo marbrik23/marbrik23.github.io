@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Название статьи — Марбрик</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, #4a1d6e 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6b2fa0 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, #3b1054 0%, transparent 50%),
+        linear-gradient(160deg, #1c0526 0%, #2e0a45 100%);
+      color: #f0e6ff;
+      padding: 40px 16px;
+    }
+
+    .article {
+      max-width: 680px;
+      margin: 0 auto;
+      background: rgba(30, 8, 48, 0.75);
+      border: 1px solid rgba(190, 120, 255, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      padding: 36px 32px;
+    }
+
+    /* Шапка статьи */
+    .article-meta {
+      color: #b694e0;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+
+    .article h1 {
+      color: #e6ccff;
+      font-size: 1.7rem;
+      line-height: 1.25;
+      margin-bottom: 24px;
+    }
+
+    /* Карта статьи */
+    .toc {
+      background: rgba(140, 70, 200, 0.15);
+      border: 1px solid rgba(190, 120, 255, 0.25);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+
+    .toc-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #d9b8ff;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .toc ol { margin: 0; padding-left: 20px; }
+
+    .toc a {
+      color: #e6ccff;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(190, 120, 255, 0.4);
+      font-size: 0.95rem;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+      border-bottom-color: #e6ccff;
+    }
+
+    /* Текст статьи */
+    .article h2 {
+      color: #e6ccff;
+      font-size: 1.25rem;
+      margin: 30px 0 12px;
+    }
+
+    .article h3 {
+      color: #e6ccff;
+      font-size: 1.05rem;
+      margin: 22px 0 8px;
+    }
+
+    .article p {
+      line-height: 1.65;
+      margin-bottom: 14px;
+      color: #efe4ff;
+    }
+
+    .article a {
+      color: #c9a8ee;
+      text-decoration: underline;
+      text-decoration-color: rgba(190, 120, 255, 0.5);
+    }
+
+    .article ul, .article ol {
+      margin: 0 0 14px 24px;
+      line-height: 1.6;
+    }
+
+    /* Картинки */
+    .article figure {
+      margin: 22px 0;
+      text-align: center;
+    }
+
+    .article figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(190, 120, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .article figcaption {
+      font-size: 0.8rem;
+      color: #b694e0;
+      margin-top: 8px;
+    }
+
+    /* Нижняя навигация */
+    .article-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 12px;
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(190, 120, 255, 0.25);
+    }
+
+    .article-nav a {
+      display: flex;
+      align-items: center;
+      max-width: 48%;
+      padding: 10px 18px;
+      border-radius: 14px;
+      background: rgba(140, 70, 200, 0.25);
+      border: 1px solid rgba(190, 120, 255, 0.25);
+      color: #f0e6ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .article-nav a:hover {
+      background: rgba(170, 100, 235, 0.45);
+      box-shadow: 0 0 12px rgba(180, 100, 255, 0.4);
+    }
+
+    .nav-back { flex-direction: row; gap: 8px; }
+    .nav-next { flex-direction: row; gap: 8px; justify-content: flex-end; text-align: right; }
+
+    .nav-next .nav-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: #c9a8ee;
+      margin-top: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 260px;
+    }
+
+    .nav-next .nav-main { min-width: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .article-nav a { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .article { padding: 24px 18px; }
+      .article h1 { font-size: 1.35rem; }
+      .article-nav { flex-direction: column; }
+      .article-nav a { max-width: 100%; }
+      .nav-next { justify-content: flex-start; text-align: left; }
+    }
+  </style>
+</head>
+<body data-article-id="Post-1">
+
+  <div class="article">
+
+    <div class="article-meta">26 октября 2024</div>
+
+    <h1>Знакомьтесь — Марбрик Team!</h1>
+
+    <nav class="toc">
+      <div class="toc-title">Содержание</div>
+      <ol id="toc-list"></ol>
+    </nav>
+
+    <p>Первый абзац статьи…</p>
+
+    <h2>Кто такие Марбрик Team?</h2>
+    <p>Текст раздела…</p>
+
+    <figure>
+      <img src="picture.jpg" alt="Описание картинки">
+      <figcaption>Подпись к картинке (необязательно — строку можно удалить)</figcaption>
+    </figure>
+
+    <h2>Второй раздел</h2>
+    <p>Ещё текст…</p>
+
+    <nav class="article-nav">
+      <a class="nav-back" href="../../articles.html">← Назад к статьям</a>
+      <a class="nav-next" id="next-article" href="#">
+        <span class="nav-main">
+          Читать так же →
+          <span class="nav-label" id="next-title"></span>
+        </span>
+      </a>
+    </nav>
+
+  </div>
+
+  <script>
+    // ===== Настройки =====
+    const JSON_URL   = '../articles.json';   // путь до JSON (одна папка вверх, т.к. статья лежит в libs/.../ )
+    const CURRENT_ID = document.body.dataset.articleId; // id этой статьи из JSON
+    const MANUAL_NEXT = { url: '../../articles.html', title: 'к списку статей' }; // запасной вариант
+
+    // ===== 1. Карта статьи: собираем все h2 автоматически =====
+    const h2s = document.querySelectorAll('.article h2');
+    const tocList = document.getElementById('toc-list');
+
+    if (h2s.length === 0) {
+      document.querySelector('.toc').style.display = 'none';
+    } else {
+      h2s.forEach((h, i) => {
+        if (!h.id) h.id = 'sec-' + (i + 1); // если свой id не задан — генерируем
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#${h.id}">${h.textContent}</a>`;
+        tocList.appendChild(li);
+      });
+    }
+
+    // ===== 2. «Читать так же»: случайная статья из JSON =====
+    function setNext(url, title) {
+      document.getElementById('next-article').href = url;
+      document.getElementById('next-title').textContent = title;
+    }
+
+    fetch(JSON_URL)
+      .then(r => r.json())
+      .then(data => {
+        // Все статьи из всех разделов в один список
+        const all = [].concat(data.general || [], data.personal || [], data.archive || []);
+        const others = all.filter(a => a.id !== CURRENT_ID);
+        if (others.length === 0) {
+          setNext(MANUAL_NEXT.url, MANUAL_NEXT.title);
+          return;
+        }
+        const pick = others[Math.floor(Math.random() * others.length)];
+        // Путь до статьи: из libs/general/xxx.html к libs/general/other.html — уже относительный внутри libs,
+        // но JSON-ссылки записаны от корня сайта (libs/general/...), поэтому нормализуем:
+        const base = JSON_URL.replace(/articles\.json$/, '');
+        setNext(base + pick.url.replace(/^libs\//, ''), pick.title);
+      })
+      .catch(() => setNext(MANUAL_NEXT.url, MANUAL_NEXT.title));
+  </script>
+
+</body>
+</html>
