@@ -42,6 +42,28 @@
       padding: 32px 28px;
     }
 
+    /* Кнопка выхода на главную */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #f0e6ff;
+      text-decoration: none;
+      background: rgba(140, 70, 200, 0.25);
+      border: 1px solid rgba(190, 120, 255, 0.25);
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(170, 100, 235, 0.45);
+      box-shadow: 0 0 12px rgba(180, 100, 255, 0.4);
+    }
+
     /* Быстрые ссылки */
     .quick-links {
       display: flex;
@@ -61,7 +83,6 @@
       font-size: 0.95rem;
       font-weight: 600;
       transition: background 0.2s ease, box-shadow 0.2s ease;
-      scroll-margin-top: 20px;
     }
 
     .quick-links a:hover {
@@ -109,19 +130,14 @@
       box-shadow: 0 6px 20px rgba(160, 80, 255, 0.35);
     }
 
-    /* Левая колонка: иконка + дата */
-    .card-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      min-width: 64px;
-      flex-shrink: 0;
-    }
-
+    /* Иконка слева */
     .card-icon {
       font-size: 2rem;
       line-height: 1;
+      flex-shrink: 0;
+      min-width: 44px;
+      display: flex;
+      justify-content: center;
     }
 
     .card-icon img {
@@ -132,13 +148,7 @@
       border: 1px solid rgba(190, 120, 255, 0.3);
     }
 
-    .card-date {
-      font-size: 0.72rem;
-      color: #c9a8ee;
-      text-align: center;
-    }
-
-    /* Правая колонка: название + описание */
+    /* Текст: название, описание, дата */
     .card-text { flex: 1; }
 
     .card-title {
@@ -151,18 +161,38 @@
       font-size: 0.85rem;
       color: #d9c4f2;
       line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .card-date {
+      font-size: 0.72rem;
+      color: #b694e0;
+    }
+
+    /* Стрелка справа */
+    .card-arrow {
+      flex-shrink: 0;
+      font-size: 1.5rem;
+      color: #c9a8ee;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .article-card:hover .card-arrow {
+      transform: translateX(4px);
+      color: #f0e6ff;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .article-card, .quick-links a { transition: none; }
+      .article-card, .quick-links a, .back-link, .card-arrow { transition: none; }
+      .article-card:hover .card-arrow { transform: none; }
     }
 
     @media (max-width: 480px) {
       .site-title { font-size: 1.5rem; }
       .panel { padding: 24px 16px; }
       .article-card { gap: 12px; padding: 14px; }
-      .card-left { min-width: 52px; }
-      .card-icon { font-size: 1.6rem; }
+      .card-icon { font-size: 1.6rem; min-width: 36px; }
+      .card-icon img { width: 36px; height: 36px; }
     }
   </style>
 </head>
@@ -171,6 +201,9 @@
   <h1 class="site-title">Статьи</h1>
 
   <div class="panel">
+
+    <!-- Выход на главную -->
+    <a class="back-link" href="index.html">← На главную</a>
 
     <!-- Быстрые ссылки -->
     <nav class="quick-links">
@@ -198,7 +231,7 @@
   </div>
 
   <script>
-    const BACK = 'index.html'; // куда возвращаться, поменяй при необходимости
+    const BACK = 'index.html'; // куда ведёт кнопка выхода
 
     // Как отрисовать иконку: пусто → ничего, http/data → картинка, остальное → эмодзи
     function iconMarkup(icon) {
@@ -217,14 +250,13 @@
       }
       box.innerHTML = articles.map(a => `
         <a class="article-card" href="${a.url}" style="--accent:${a.color}">
-          <div class="card-left">
-            ${iconMarkup(a.icon)}
-            <span class="card-date">${a.date}</span>
-          </div>
+          ${iconMarkup(a.icon)}
           <div class="card-text">
             <div class="card-title">${a.title}</div>
             <div class="card-desc">${a.description}</div>
+            <div class="card-date">${a.date}</div>
           </div>
+          <div class="card-arrow">→</div>
         </a>
       `).join('');
     }
