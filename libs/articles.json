@@ -1,0 +1,34 @@
+{
+  "general": [
+    {
+      "id": "Post-3",
+      "title": "Как я делал игры на кнопочные телефоны?",
+      "description": "Ретроспектива: как я создавал игры для J2ME и что из этого вышло.",
+      "date": "12 ноября 2024",
+      "color": "#8c46c8",
+      "icon": "🎮",
+      "url": "libs/general/how_to_make_j2me_game.html"
+    }
+  ],
+  "personal": [
+    {
+      "id": "Post-1",
+      "title": "Знакомьтесь — Марбрик Team!",
+      "description": "В статье будет рассказано о каждом персонаже команды нашего канала.",
+      "date": "26 октября 2024",
+      "color": "#b45cff",
+      "icon": "❤️",
+      "url": "libs/personal/meet_marbrik_team.html"
+    },
+    {
+      "id": "Post-2",
+      "title": "Обо мне и моём канале",
+      "description": "Статья обо мне, моей жизни и ютуберстве.",
+      "date": "2 ноября 2024",
+      "color": "#ff7ac8",
+      "icon": "",
+      "url": "libs/personal/about_me.html"
+    }
+  ],
+  "archive": []
+}

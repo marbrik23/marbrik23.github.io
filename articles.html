@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Статьи — Марбрик</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, #4a1d6e 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6b2fa0 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, #3b1054 0%, transparent 50%),
+        linear-gradient(160deg, #1c0526 0%, #2e0a45 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px;
+      color: #f0e6ff;
+    }
+
+    .site-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(180, 100, 255, 0.6);
+      margin-bottom: 24px;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 640px;
+      background: rgba(30, 8, 48, 0.75);
+      border: 1px solid rgba(190, 120, 255, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      padding: 32px 28px;
+    }
+
+    /* Быстрые ссылки */
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .quick-links a {
+      color: #f0e6ff;
+      text-decoration: none;
+      background: rgba(140, 70, 200, 0.25);
+      border: 1px solid rgba(190, 120, 255, 0.25);
+      padding: 8px 22px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+      scroll-margin-top: 20px;
+    }
+
+    .quick-links a:hover {
+      background: rgba(170, 100, 235, 0.45);
+      box-shadow: 0 0 12px rgba(180, 100, 255, 0.4);
+    }
+
+    /* Разделы */
+    .section { margin-bottom: 34px; }
+
+    .section-title {
+      font-size: 1.25rem;
+      color: #e6ccff;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(190, 120, 255, 0.25);
+      padding-bottom: 8px;
+    }
+
+    .empty-note {
+      color: #b694e0;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    /* Карточка статьи */
+    .article-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(145deg, rgba(106, 47, 160, 0.35), rgba(60, 18, 92, 0.5));
+      border: 1px solid rgba(190, 120, 255, 0.3);
+      border-left: 4px solid var(--accent, #8c46c8);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      text-decoration: none;
+      color: #f0e6ff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .article-card:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(145deg, rgba(140, 70, 200, 0.45), rgba(80, 25, 120, 0.6));
+      box-shadow: 0 6px 20px rgba(160, 80, 255, 0.35);
+    }
+
+    /* Левая колонка: иконка + дата */
+    .card-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 64px;
+      flex-shrink: 0;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .card-icon img {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid rgba(190, 120, 255, 0.3);
+    }
+
+    .card-date {
+      font-size: 0.72rem;
+      color: #c9a8ee;
+      text-align: center;
+    }
+
+    /* Правая колонка: название + описание */
+    .card-text { flex: 1; }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: #d9c4f2;
+      line-height: 1.4;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .article-card, .quick-links a { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .site-title { font-size: 1.5rem; }
+      .panel { padding: 24px 16px; }
+      .article-card { gap: 12px; padding: 14px; }
+      .card-left { min-width: 52px; }
+      .card-icon { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="site-title">Статьи</h1>
+
+  <div class="panel">
+
+    <!-- Быстрые ссылки -->
+    <nav class="quick-links">
+      <a href="#general">Основное</a>
+      <a href="#personal">Обо мне</a>
+      <a href="#archive">Архив</a>
+    </nav>
+
+    <!-- Список статей (заполняется из JSON) -->
+    <section class="section" id="general">
+      <h2 class="section-title">Основное</h2>
+      <div class="article-list" data-section="general"></div>
+    </section>
+
+    <section class="section" id="personal">
+      <h2 class="section-title">Обо мне</h2>
+      <div class="article-list" data-section="personal"></div>
+    </section>
+
+    <section class="section" id="archive">
+      <h2 class="section-title">Архив</h2>
+      <div class="article-list" data-section="archive"></div>
+    </section>
+
+  </div>
+
+  <script>
+    const BACK = 'index.html'; // куда возвращаться, поменяй при необходимости
+
+    // Как отрисовать иконку: пусто → ничего, http/data → картинка, остальное → эмодзи
+    function iconMarkup(icon) {
+      if (!icon) return '<div class="card-icon"></div>';
+      if (/^(https?:|data:)/.test(icon) || /\.(png|jpe?g|gif|webp|svg)$/i.test(icon)) {
+        return `<div class="card-icon"><img src="${icon}" alt=""></div>`;
+      }
+      return `<div class="card-icon">${icon}</div>`;
+    }
+
+    function renderList(section, articles) {
+      const box = document.querySelector(`.article-list[data-section="${section}"]`);
+      if (!articles || articles.length === 0) {
+        box.innerHTML = '<p class="empty-note">Здесь пока пусто…</p>';
+        return;
+      }
+      box.innerHTML = articles.map(a => `
+        <a class="article-card" href="${a.url}" style="--accent:${a.color}">
+          <div class="card-left">
+            ${iconMarkup(a.icon)}
+            <span class="card-date">${a.date}</span>
+          </div>
+          <div class="card-text">
+            <div class="card-title">${a.title}</div>
+            <div class="card-desc">${a.description}</div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    fetch('libs/articles.json')
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(data => {
+        renderList('general', data.general);
+        renderList('personal', data.personal);
+        renderList('archive', data.archive);
+      })
+      .catch(() => {
+        document.querySelectorAll('.article-list').forEach(box => {
+          box.innerHTML = '<p class="empty-note">Не удалось загрузить список статей.</p>';
+        });
+      });
+  </script>
+
+</body>
+</html>
